@@ -3,7 +3,6 @@ plant,NN,1.0,3.0
 USA,NNP,2.0,3.0
 site-customer-duns,NNS,1.0,3.0
 India,NNP,2.0,3.0
-Hi,NNP,0.0,2.0
 IBOT,NNP,1.0,2.0
 service-now,JJ,1.0,7.0
 ticket,NN,2.0,7.0
@@ -13,3 +12,19 @@ Jobs,NNP,6.0,7.0
 Bye,NN,0.0,1.0
 meaning,NN,1.0,3.0
 Service-now,JJ,2.0,3.0
+weather,VBP,1.0,3.0
+new-york,NN,2.0,3.0
+weather,VBP,1.0,3.0
+bangalore,NN,2.0,3.0
+ticket,NN,1.0,3.0
+user1,NN,2.0,3.0
+site-customer-duns,JJ,1.0,3.0
+india,NN,2.0,3.0
+weather,VBP,1.0,4.0
+charlotte,NN,3.0,4.0
+train,NN,1.0,7.0
+block,NN,3.0,7.0
+equipment,NN,5.0,7.0
+india,NN,6.0,7.0
+owner-name,NN,1.0,3.0
+us12341233,NN,2.0,3.0

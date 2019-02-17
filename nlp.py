@@ -6,6 +6,8 @@ from nltk.stem import WordNetLemmatizer
 import pandas as pd
 import os
 import random
+from sklearn.ensemble import RandomForestClassifier
+import pickle
 
 # Set the stop words in English language
 stopset = set(stopwords.words('english'))
@@ -44,6 +46,17 @@ def train_model(tagger, entity_list, pos_tag, word_occurance_position, total_set
     df.drop(["pos_tag"], axis = 1, inplace = True) ## Finished the One-Hot encoding of the file
     
     ## Train the model using the df as input
+    x_cols = [x for x in df.columns if x != "position" and x != "word"]
+    rfc = RandomForestClassifier(n_jobs = -1, random_state = 42, n_estimators = 100)
+    rfc.fit(df[x_cols], df["position"])
+    print(rfc.feature_importances_)
+    print(rfc.predict([[3, 0, 0, 0, 0, 1]]))
+    print(rfc.predict([[3, 0, 1, 0, 0, 0]]))
+    print(rfc.predict([[7, 0, 1, 0, 0, 0]]))
+
+    ## Store the model for the prediction used-case
+    filename = "Training_Model.pkl"
+    pickle.dump(rfc, open(filename, 'wb'))
 
     df.to_csv("Training2.csv", index = False)
 
@@ -85,10 +98,12 @@ else:
             tokenize = nltk.word_tokenize(input_intent) ## Tokenize the sentence
             ## Remove the stop words and lemmatize the words
             tokens = [w for w in tokenize if not w in stopset]
-            for items in tokens:
+            tagger = nltk.pos_tag(tokens) ## Get the POS tags as well
+            for items in tagger:
                 if items in GREETING_INPUTS:
                     print("Chatbot: ", random.choice(GREETING_RESPONSES))
                 if items == "?":
                     print("Chatbot: I am IBOT. Your chatbot companion!")
+                if 
         except (KeyboardInterrupt):
             break
