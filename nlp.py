@@ -5,6 +5,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import pandas as pd
 import os
+import random
 
 # Set the stop words in English language
 stopset = set(stopwords.words('english'))
@@ -14,8 +15,13 @@ nltk.download('averaged_perceptron_tagger')
 nltk.download('wordnet')
 lemmatizer = WordNetLemmatizer()
 
+# Small talk inputs and outputs
+GREETING_INPUTS = ["hello", "hi", "greetings", "sup", "what's up", "hey"]
+GREETING_RESPONSES = ["Hi there😇", "*nods*"]
+
 def train_model(tagger, entity_list, pos_tag, word_occurance_position, total_set_of_words):
     print(tagger, entity_list, word_occurance_position)
+    print("\n###################### Parsing the inputs ######################\n")
     exists = os.path.isfile('Training.csv')
     if not exists:
         df = pd.DataFrame(columns = ["word", "pos_tag", "position", "total_w"])
@@ -29,9 +35,17 @@ def train_model(tagger, entity_list, pos_tag, word_occurance_position, total_set
         df.at[i, "position"] = wo
         df.at[i, "total_w"] = tsw
         i = i + 1
-    print("\n###################### Completed expanding! ######################\n")
     df.to_csv("Training.csv", index = False)
     print("Saved to csv!")
+
+    print("###################### Pre-processing the training file ######################\n")
+    pos_tag_one_hot = pd.get_dummies(df["pos_tag"])
+    df = pd.concat([df, pos_tag_one_hot], axis = 1)
+    df.drop(["pos_tag"], axis = 1, inplace = True) ## Finished the One-Hot encoding of the file
+    
+    ## Train the model using the df as input
+
+    df.to_csv("Training2.csv", index = False)
 
 if input("Want to Enter the training phase or the Testing Phase? ") == "train":
     entity_list = []; pos_tag = []; word_occurance_position = []; total_set_of_words = []
@@ -40,7 +54,7 @@ if input("Want to Enter the training phase or the Testing Phase? ") == "train":
             ## I have to get information about the position of the entities
             ## What are thier POS Tags
             ## -- wrt after lemm and stop removal
-            intents = str(input("Me: "))
+            intents = str(input("Me: ")).lower()
             tokenize = nltk.word_tokenize(intents) ## Tokenize the sentence
             ## Remove the stop words and lemmatize the words
             tokens = [lemmatizer.lemmatize(w) for w in tokenize if not w in stopset]
@@ -64,5 +78,17 @@ if input("Want to Enter the training phase or the Testing Phase? ") == "train":
                 train_model(tagger, entity_list, pos_tag, word_occurance_position, total_set_of_words)
                 break
 else:
-    ## Code for prediction from the trained model
-    pass
+    while True:
+        try:
+            ## Code for prediction from the trained model
+            input_intent = str(input("Me: ")).lower()
+            tokenize = nltk.word_tokenize(input_intent) ## Tokenize the sentence
+            ## Remove the stop words and lemmatize the words
+            tokens = [w for w in tokenize if not w in stopset]
+            for items in tokens:
+                if items in GREETING_INPUTS:
+                    print("Chatbot: ", random.choice(GREETING_RESPONSES))
+                if items == "?":
+                    print("Chatbot: I am IBOT. Your chatbot companion!")
+        except (KeyboardInterrupt):
+            break

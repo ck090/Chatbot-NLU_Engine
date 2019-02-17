@@ -1,0 +1,15 @@
+word,position,total_w,JJ,NN,NNP,NNS
+plant,1.0,3.0,0,1,0,0
+USA,2.0,3.0,0,0,1,0
+site-customer-duns,1.0,3.0,0,0,0,1
+India,2.0,3.0,0,0,1,0
+Hi,0.0,2.0,0,0,1,0
+IBOT,1.0,2.0,0,0,1,0
+service-now,1.0,7.0,1,0,0,0
+ticket,2.0,7.0,0,1,0,0
+migration,4.0,7.0,0,1,0,0
+Talend,5.0,7.0,0,0,1,0
+Jobs,6.0,7.0,0,0,1,0
+Bye,0.0,1.0,0,1,0,0
+meaning,1.0,3.0,0,1,0,0
+Service-now,2.0,3.0,1,0,0,0
