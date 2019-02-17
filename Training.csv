@@ -1,0 +1,8 @@
+word,pos_tag,position,total_w
+plant,NN,1.0,3.0
+USA,NNP,2.0,3.0
+plant,NN,1.0,4.0
+Mexico,NNP,2.0,4.0
+USA,NNP,3.0,4.0
+ticket,VBZ,1.0,3.0
+Service-Now,JJ,2.0,3.0
